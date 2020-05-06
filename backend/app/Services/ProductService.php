@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\Models\Product;
 use Tymon\JWTAuth\JWTAuth;
@@ -36,6 +34,7 @@ class ProductService
         if ($categoryId) {
             return Product::where('category_id', $categoryId)->get();
         }
+
         return Product::all();
     }
 

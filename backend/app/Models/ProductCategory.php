@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class ProductCategory
- * @package App\Models
+ * Class ProductCategory.
  *
  * @property ProductCategory        $parentCategory
  * @property string                 $title
@@ -22,15 +21,16 @@ class ProductCategory extends Model
     protected $fillable = [
         'title',
         'description',
-        'parent_id'
+        'parent_id',
     ];
 
-
-    public function parentCategory() {
-        return $this->belongsTo(ProductCategory::class, 'parent_id', 'id');
+    public function parentCategory()
+    {
+        return $this->belongsTo(self::class, 'parent_id', 'id');
     }
 
-    public function products() {
+    public function products()
+    {
         return $this->hasMany('App\Models\Product');
     }
 }

@@ -14,7 +14,7 @@ class AuthController extends Controller
 
         if ($result === false) {
             return response()->json([
-                'message' => 'Authorization failed'
+                'message' => 'Authorization failed',
             ], Response::HTTP_UNAUTHORIZED);
         }
 
