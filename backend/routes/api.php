@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('/login', 'AuthController@login');
+
+Route::post('/product', 'ProductController@create');
+Route::delete('/product/{id}', 'ProductController@delete');
+Route::get('/product/{id}', 'ProductController@get');
+Route::get('/product', 'ProductController@search');
+Route::put('/product/{id}', 'ProductController@update');
+
+Route::post('/category', 'ProductCategoryController@create');
+Route::delete('/category/{id}', 'ProductCategoryController@delete');
+Route::get('/category/{id}', 'ProductCategoryController@get');
+Route::get('/category/', 'ProductCategoryController@search');
+Route::get('/category/{id}/products', 'ProductController@search');
