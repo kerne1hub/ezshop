@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Product
- * @package App\Models
+ * Class Product.
  *
  * @property ProductCategory        $category
  * @property string                 $name
@@ -28,11 +27,11 @@ class Product extends Model
         'count',
         'price',
         'version',
-        'category_id'
+        'category_id',
     ];
 
-
-    public function category() {
+    public function category()
+    {
         return $this->belongsTo('App\ProductCategory');
     }
 }
