@@ -40,13 +40,7 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
-        /**
-         * /category/{id}/products.
-         *
-         * @var $categoryId
-         */
-        $categoryId = $request['id'];
-        $result = $this->productService->search($categoryId);
+        $result = $this->productService->search($request->all());
 
         return response()->json($result);
     }

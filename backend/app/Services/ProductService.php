@@ -29,10 +29,14 @@ class ProductService
         return Product::findOrFail($id);
     }
 
-    public function search($categoryId)
+    public function search($data)
     {
+        $categoryId = key_exists('categoryId', $data) ? $data['categoryId'] : null;
+        $keyword = key_exists('name', $data) ? $data['name'] : null;
         if ($categoryId) {
             return Product::where('category_id', $categoryId)->get();
+        } else if ($keyword) {
+            return Product::where('name', 'like', "%$keyword%")->get();
         }
 
         return Product::all();
