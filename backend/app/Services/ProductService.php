@@ -31,11 +31,11 @@ class ProductService
 
     public function search($data)
     {
-        $categoryId = key_exists('categoryId', $data) ? $data['categoryId'] : null;
-        $keyword = key_exists('name', $data) ? $data['name'] : null;
+        $categoryId = array_key_exists('categoryId', $data) ? $data['categoryId'] : null;
+        $keyword = array_key_exists('name', $data) ? $data['name'] : null;
         if ($categoryId) {
             return Product::where('category_id', $categoryId)->get();
-        } else if ($keyword) {
+        } elseif ($keyword) {
             return Product::where('name', 'like', "%$keyword%")->get();
         }
 
