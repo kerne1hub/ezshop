@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Product\CreateCategoryRequest;
+use App\Http\Requests\Product\UpdateCategoryRequest;
 use App\Services\ProductCategoryService;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -14,7 +16,7 @@ class ProductCategoryController extends Controller
         $this->categoryService = app(ProductCategoryService::class);
     }
 
-    public function create(CreateProductCategoryRequest $request)
+    public function create(CreateCategoryRequest $request)
     {
         $result = $this->categoryService->create($request->all());
 
@@ -42,7 +44,7 @@ class ProductCategoryController extends Controller
         return response()->json($result);
     }
 
-    public function update($request, $id)
+    public function update(UpdateCategoryRequest $request, $id)
     {
         $result = $this->categoryService->update($request->all(), $id);
 

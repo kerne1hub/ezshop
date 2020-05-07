@@ -26,3 +26,4 @@ Route::delete('/category/{id}', 'ProductCategoryController@delete');
 Route::get('/category/{id}', 'ProductCategoryController@get');
 Route::get('/category/', 'ProductCategoryController@search');
 Route::get('/category/{id}/products', 'ProductController@search');
+Route::put('/category/{id}', 'ProductCategoryController@update');
