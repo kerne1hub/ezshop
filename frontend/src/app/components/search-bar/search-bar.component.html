@@ -1,14 +1,9 @@
-<div class="col-md-12">
-  <div class="row">
-    <div class="col-md-10">
-      <input type="text" #searchInput
-             (keyup.enter)="searchProducts(searchInput.value)"
-             class="form-control" placeholder="Search products">
-    </div>
-    <div class="col-md-2">
-      <button type="submit"
-              (click)="searchProducts(searchInput.value)"
-              class="btn btn-primary">Search</button>
-    </div>
+<div class="input-group">
+  <input type="text" class="form-control" placeholder="Search products" aria-label="keyword" aria-describedby="button-search"
+         #searchInput (keyup.enter)="searchProducts(searchInput.value)">
+  <div class="input-group-append">
+    <button class="btn btn-light" type="button" id="button-search" (click)="searchProducts(searchInput.value)">
+      <span class="fa fa-search"></span>
+    </button>
   </div>
 </div>

@@ -7,6 +7,7 @@ body {
 
 body, html {
   height: 100%;
+  background: lightgray;
 }
 
 .footer {
@@ -23,3 +24,16 @@ body, html {
 .content {
   padding-bottom: 100px;
 }
+
+.main {
+  border: 2px solid #ccc;
+  border-radius: 15px;
+  width: 530px;
+  margin: 45px auto;
+  background-color: #fff;
+  padding-bottom: 15px;
+  position: relative;
+}
+
+
+

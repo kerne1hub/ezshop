@@ -30,6 +30,11 @@ class Product extends Model
         'category_id',
     ];
 
+    protected $hidden = [
+        'version',
+        'deleted_at',
+    ];
+
     public function category()
     {
         return $this->belongsTo('App\ProductCategory', 'category_id', 'id');

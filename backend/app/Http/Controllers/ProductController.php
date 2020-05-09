@@ -40,7 +40,7 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
-        $result = $this->productService->search($request->all());
+        $result = $this->productService->search($request);
 
         return response()->json($result);
     }

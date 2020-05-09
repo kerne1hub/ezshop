@@ -29,8 +29,17 @@ class ProductCategoryService
         return ProductCategory::with('products')->findOrFail($id);
     }
 
-    public function search()
+    public function search($data)
     {
+        $isRoot = isset($data->root) ? $data['root'] : false;
+        $parentId = isset($data->parentId) ? $data['parentId'] : null;
+
+        if ($isRoot) {
+            return ProductCategory::where('parent_id', null)->get();
+        } elseif ($parentId) {
+            return ProductCategory::where('parent_id', $parentId)->get();
+        }
+
         return ProductCategory::all();
     }
 

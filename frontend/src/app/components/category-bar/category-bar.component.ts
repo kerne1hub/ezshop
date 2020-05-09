@@ -14,13 +14,21 @@ export class CategoryBarComponent implements OnInit {
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
-    this.getCategories();
+    this.getRootCategories();
   }
 
-  getCategories() {
-    this.productService.getProductCategories().subscribe(
+  getRootCategories() {
+    this.productService.getRootCategories().subscribe(
       data => this.productCategories = data
     )
+  }
+
+  getCategories(parentId: number): Category[] {
+    let categories = null;
+    this.productService.getCategories(parentId).subscribe(
+      data => categories = data
+    );
+    return categories;
   }
 
 }

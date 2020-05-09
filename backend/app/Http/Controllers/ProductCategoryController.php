@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Product\CreateCategoryRequest;
 use App\Http\Requests\Product\UpdateCategoryRequest;
 use App\Services\ProductCategoryService;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProductCategoryController extends Controller
@@ -37,9 +38,9 @@ class ProductCategoryController extends Controller
         return response()->json($result);
     }
 
-    public function search()
+    public function search(Request $request)
     {
-        $result = $this->categoryService->search();
+        $result = $this->categoryService->search($request);
 
         return response()->json($result);
     }
