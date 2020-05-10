@@ -16,6 +16,7 @@ import { ErrorInterceptor } from "./helpers/error.interceptor";
 import {ReactiveFormsModule} from "@angular/forms";
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { AlertComponent } from './components/alert/alert.component';
+import { ProductFormComponent } from './components/product-form/product-form.component';
 
 const routes: Routes = [
   { path: 'register', component: RegistrationFormComponent },
@@ -35,7 +36,8 @@ const routes: Routes = [
     SearchBarComponent,
     RegistrationFormComponent,
     LoginFormComponent,
-    AlertComponent
+    AlertComponent,
+    ProductFormComponent
   ],
   imports: [
     BrowserModule,

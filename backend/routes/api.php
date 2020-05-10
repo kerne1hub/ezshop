@@ -13,7 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/login', 'AuthController@login');
+Route::group([
+    'prefix' => 'auth'
+], function () {
+    Route::post('login', 'AuthController@login');
+    Route::post('registration', 'AuthController@registration');
+});
 
 Route::post('/product', 'ProductController@create');
 Route::delete('/product/{id}', 'ProductController@delete');

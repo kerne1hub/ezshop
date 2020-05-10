@@ -3,43 +3,47 @@
 namespace App\Services;
 
 use App\Models\User;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Tymon\JWTAuth\JWTAuth;
+use Illuminate\Support\Facades\Auth;
 
 class AuthService
 {
-    use AuthenticatesUsers;
 
-    protected $auth;
     protected $userModel;
 
     public function __construct()
     {
-        $this->auth = app(JWTAuth::class);
         $this->userModel = app(User::class);
     }
 
     /**
      * @param \App\Http\Requests\Auth\LoginRequest $data
      *
-     * @return array|bool
+     * @return \Illuminate\Http\JsonResponse
      */
     public function login($data)
     {
-        $credentials = $this->credentials($data);
-        $token = $this->auth->attempt($credentials);
+        $credentials = request(['email', 'password']);
 
-        if ($token === false) {
-            return false;
+        if (! $token = auth()->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        $user = $this->userModel->where('email', $data['email'])->first();
+        return $this->respondWithToken($token);
+    }
 
-        return [
-            'token'       => $token,
-            'ttl'         => config('jwt.ttl'),
-            'refresh_ttl' => config('jwt.refresh_ttl'),
-            'user'        => $user,
-        ];
+    /**
+     * Get the token array structure.
+     *
+     * @param  string $token
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60
+        ]);
     }
 }

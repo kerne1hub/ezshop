@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" xmlns="http://www.w3.org/1999/html">
 
   <div class="col-lg-3">
 
@@ -27,11 +27,21 @@
           </div>
         </div>
         <div class="col-md-2">
-          <h3 class="card-text mt-4"><b>{{ product.price }} </b> <p class="fa fa-ruble-sign"></p></h3>
+          <h4 class="card-text mt-4"><b>{{ product.price }} </b>
+            <h4 class="fa fa-ruble-sign align-top"></h4>
+          </h4>
         </div>
       </div>
-      <div class="card-footer bg-transparent mb-0">
-        <p class="card-text"><small class="text-muted">В наличии: {{ product.count }}</small></p>
+      <div class="card-footer bg-transparent">
+        <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+        <small class="text-muted">В наличии: {{ product.count }}</small>
+        <div class="input-group">
+        <div class="input-group-prepend">
+          <a class="dropdown-item" data-toggle="modal" data-target="#edit_product"><small class="fa fa-edit d-block py-0"></small></a>
+          <app-product-form [product]="product"></app-product-form>
+        </div>
+        </div>
+        </div>
       </div>
     </div>
 

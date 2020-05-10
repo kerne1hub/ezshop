@@ -21,8 +21,8 @@ export class ProductService {
     );
   }
 
-  getCategories(parentId: number): Observable<Category[]> {
-    const url = `${this.baseUrl}/category?parentId=${parentId}`;
+  getCategories(parentId: number = null): Observable<Category[]> {
+    const url = parentId != null? `${this.baseUrl}/category?parentId=${parentId}`: `${this.baseUrl}/category`;
     return this.httpClient.get<Category[]>(url).pipe(
       map(response => response)
     );
@@ -40,5 +40,20 @@ export class ProductService {
     return this.httpClient.get<Product[]>(url).pipe(
       map(response => response)
     );
+  }
+
+  updateProduct(product: Product) {
+    let name = product.name;
+    let description = product.description;
+    let count = product.count;
+    let price = product.price;
+    let category_id = product.category_id;
+
+    return this.httpClient.put<any>(`http://localhost:8000/api/product/${product.id}`, {
+      name, description, count, price, category_id
+    })
+      .pipe(map(response => {
+        return response.product;
+      }))
   }
 }
