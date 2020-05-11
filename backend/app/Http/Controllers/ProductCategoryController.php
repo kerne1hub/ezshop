@@ -15,6 +15,7 @@ class ProductCategoryController extends Controller
     public function __construct()
     {
         $this->categoryService = app(ProductCategoryService::class);
+        $this->middleware('auth:api', ['except' => ['get', 'search']]);
     }
 
     public function create(CreateCategoryRequest $request)

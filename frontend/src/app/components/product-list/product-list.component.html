@@ -37,8 +37,8 @@
         <small class="text-muted">В наличии: {{ product.count }}</small>
         <div class="input-group">
         <div class="input-group-prepend">
-          <a class="dropdown-item" data-toggle="modal" data-target="#edit_product"><small class="fa fa-edit d-block py-0"></small></a>
-          <app-product-form [product]="product"></app-product-form>
+          <a class="dropdown-item" data-toggle="modal" data-target="#product_form" (click)="clearErrors()" *ngIf="isLoggedIn"><small class="fa fa-edit d-block py-0"></small></a>
+          <app-product-form id="product_form{{product.id}}" [product]="product"></app-product-form>
         </div>
         </div>
         </div>

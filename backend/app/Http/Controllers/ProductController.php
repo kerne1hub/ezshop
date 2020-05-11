@@ -15,6 +15,7 @@ class ProductController extends Controller
     public function __construct()
     {
         $this->productService = app(ProductService::class);
+        $this->middleware('auth:api', ['except' => ['get', 'search']]);
     }
 
     public function create(CreateProductRequest $request)

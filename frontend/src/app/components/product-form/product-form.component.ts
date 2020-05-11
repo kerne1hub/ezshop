@@ -11,7 +11,6 @@ import {Category} from "../../common/category";
   styleUrls: ['./product-form.component.css']
 })
 export class ProductFormComponent implements OnInit {
-
   @Input() product: Product;
   productForm: FormGroup;
   categories: Category[];
@@ -33,13 +32,13 @@ export class ProductFormComponent implements OnInit {
       count: this.product.count,
       price: this.product.price,
       category_id: this.product.category_id,
-    })
+    });
   }
 
   save() {
     this.loading = true;
-    this.fillModel();
-    this.productService.updateProduct(this.product).subscribe(
+    let editedProduct = this.fillModel();
+    this.productService.updateProduct(editedProduct).subscribe(
       () => {
         this.loading = false;
       location.reload();
@@ -52,18 +51,25 @@ export class ProductFormComponent implements OnInit {
 
   }
 
-  fillModel() {
-    this.product.name = this.productForm.get('name').value;
-    this.product.description = this.productForm.get('description').value;
-    this.product.count = this.productForm.get('count').value;
-    this.product.price = this.productForm.get('price').value;
-    this.product.category_id = this.productForm.get('category_id').value;
+  fillModel(): Product {
+    return new Product(
+      this.product.id,
+      this.productForm.get('name').value,
+      this.productForm.get('description').value,
+      this.productForm.get('count').value,
+      this.productForm.get('price').value,
+      this.productForm.get('category_id').value
+    );
   }
 
   getCategories() {
     this.productService.getCategories().subscribe(
       data => this.categories = data
     )
+  }
+
+  clearErrors() {
+    this.alertService.clear();
   }
 
 }

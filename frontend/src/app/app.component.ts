@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {AuthenticationService} from "./services/authentication.service";
 import {User} from "./common/user";
+import {AlertService} from "./services/alert.service";
 
 
 @Component({
@@ -12,7 +13,8 @@ export class AppComponent {
   title = 'ezshop';
   currentUser: User;
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(private authenticationService: AuthenticationService,
+              private alertService: AlertService) {
     this.authenticationService.currentUser.subscribe(
       user => this.currentUser = user
     )
@@ -20,6 +22,10 @@ export class AppComponent {
 
   logout() {
     this.authenticationService.logout();
+  }
+
+  clearErrors() {
+    this.alertService.clear();
   }
 
 }

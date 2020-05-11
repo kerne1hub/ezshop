@@ -56,7 +56,6 @@ export class LoginFormComponent implements OnInit {
 
     this.loading = true;
     this.authenticationService.login(this.form.email.value, this.form.password.value)
-      .pipe(first())
       .subscribe(
         data => {
           this.loading = false;

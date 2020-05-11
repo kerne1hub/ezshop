@@ -23,7 +23,7 @@
               <a class="nav-link" href="#">Contact</a>
             </li>
 
-            <li class="dropdown" *ngIf="!currentUser else logOut">
+            <li class="dropdown" (click)="clearErrors()"  *ngIf="!currentUser else logOut">
               <div class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="fa fa-sign-in-alt"></span>
               </div>

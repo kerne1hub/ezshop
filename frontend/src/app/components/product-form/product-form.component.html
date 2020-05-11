@@ -1,5 +1,5 @@
-<div class="modal fade" id="edit_product" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal fade" id="product_form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" id="product_dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Информация о продукте</h5>
@@ -9,37 +9,37 @@
       </div>
       <form [formGroup]="productForm" class="modal-body">
           <div class="form-group row justify-content-center">
-            <label for="nameInput" class="col-sm-5 col-form-label">Название продукта</label>
+            <label for="nameInput{{product.id}}" class="col-sm-5 col-form-label">Название продукта</label>
             <div class="col-sm-7">
-              <input type="text" class="form-control" id="nameInput" formControlName="name">
+              <input type="text" class="form-control" id="nameInput{{product.id}}" formControlName="name">
             </div>
           </div>
 
         <div class="form-group row justify-content-center">
-          <label for="descInput" class="col-sm-5 col-form-label">Описание продукта</label>
+          <label for="descInput{{product.id}}" class="col-sm-5 col-form-label">Описание продукта</label>
           <div class="col-sm-7">
-            <textarea class="form-control" id="descInput" formControlName="description"></textarea>
+            <textarea class="form-control" id="descInput{{product.id}}" formControlName="description"></textarea>
           </div>
         </div>
 
         <div class="form-group row justify-content-center">
-          <label for="countInput" class="col-sm-5 col-form-label">Количество</label>
+          <label for="countInput{{product.id}}" class="col-sm-5 col-form-label">Количество</label>
           <div class="col-sm-7">
-            <input type="number" class="form-control" id="countInput" formControlName="count">
+            <input type="number" class="form-control" id="countInput{{product.id}}" formControlName="count">
           </div>
         </div>
 
         <div class="form-group row justify-content-center">
-          <label for="priceInput" class="col-sm-5 col-form-label">Цена за единицу</label>
+          <label for="priceInput{{product.id}}" class="col-sm-5 col-form-label">Цена за единицу</label>
           <div class="col-sm-7">
-            <input type="number" class="form-control" id="priceInput" formControlName="price">
+            <input type="number" class="form-control" id="priceInput{{product.id}}" formControlName="price">
           </div>
         </div>
 
         <div class="form-group row justify-content-center">
-          <label for="categoryInput" class="col-sm-5 col-form-label">Категория</label>
+          <label for="categoryInput{{product.id}}" class="col-sm-5 col-form-label">Категория</label>
           <div class="col-sm-7">
-            <select class="custom-select" id="categoryInput" formControlName="category_id">
+            <select class="custom-select" id="categoryInput{{product.id}}" formControlName="category_id">
               <option *ngFor="let category of categories" value="{{ category.id }}">{{ category.title }}</option>
             </select>
           </div>
@@ -55,3 +55,4 @@
     </div>
   </div>
 </div>
+

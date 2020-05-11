@@ -3,6 +3,8 @@ import {Product} from "../../common/product";
 import {ActivatedRoute} from "@angular/router";
 import {ProductService} from "../../services/product.service";
 import {Category} from "../../common/category";
+import {AlertService} from "../../services/alert.service";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-product-list',
@@ -13,10 +15,17 @@ export class ProductListComponent implements OnInit {
 
   products: Product[];
   categories: Category[];
+  isLoggedIn = false;
   currentCategoryId;
 
   constructor(private activatedRoute: ActivatedRoute,
-              private productService: ProductService) { }
+              private productService: ProductService,
+              private authService: AuthenticationService,
+              private alertService: AlertService) {
+    this.authService.currentUser.subscribe(
+      user => this.isLoggedIn = user != null
+    )
+  }
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(() => {
@@ -52,6 +61,10 @@ export class ProductListComponent implements OnInit {
     this.productService.getCategories(parentId).subscribe(
       data => this.categories = data
     );
+  }
+
+  clearErrors() {
+    this.alertService.clear();
   }
 
 }
