@@ -1,7 +1,7 @@
 import {
   Component,
   ComponentFactory,
-  ComponentFactoryResolver, ComponentRef, NgModule, OnDestroy,
+  ComponentFactoryResolver, ComponentRef,
   OnInit,
   ViewContainerRef
 } from '@angular/core';
@@ -45,24 +45,37 @@ export class ProductListComponent implements OnInit {
     })
   }
 
-  createComponent(product: Product) {
-    if (this.componentRef) {
-      console.log('Update component');
+  createComponent(product: Product = null) {
+    if (!this.componentRef) {
+      const componentFactory: ComponentFactory<ProductFormComponent> =
+        this.resolver.resolveComponentFactory(ProductFormComponent);
+
+      this.componentRef = this.viewContainerRef.createComponent(componentFactory);
+
+      if (product) {
+        this.componentRef.instance.product = product;
+        this.componentRef.instance.option = 'update';
+      } else {
+        this.componentRef.instance.product = new Product();
+        this.componentRef.instance.option = 'create';
+      }
+
+    } else {
       this.updateComponent(product);
-      return;
     }
 
-    console.log('Create component');
-    const componentFactory: ComponentFactory<ProductFormComponent> =
-      this.resolver.resolveComponentFactory(ProductFormComponent);
-
-    this.componentRef = this.viewContainerRef.createComponent(componentFactory);
-    this.componentRef.instance.product = product;
   }
 
   updateComponent(product: Product) {
-    this.componentRef.instance.product = product;
-    this.componentRef.instance.initProductForm();
+    if (product) {
+      this.componentRef.instance.product = product;
+      this.componentRef.instance.option = 'update';
+      this.componentRef.instance.initProductForm();
+    } else {
+      this.componentRef.instance.product = new Product();
+      this.componentRef.instance.option = 'create';
+      this.componentRef.instance.initProductForm();
+    }
   }
 
   destroyComponent() {
@@ -97,6 +110,11 @@ export class ProductListComponent implements OnInit {
     this.productService.getCategories(parentId).subscribe(
       data => this.categories = data
     );
+  }
+
+  deleteProduct(productId: number) {
+    console.log(productId);
+    this.productService.deleteProduct(productId).subscribe();
   }
 
   clearErrors() {

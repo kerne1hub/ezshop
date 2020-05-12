@@ -42,6 +42,21 @@ export class ProductService {
     );
   }
 
+  createProduct(product: Product) {
+    let name = product.name;
+    let description = product.description;
+    let count = product.count;
+    let price = product.price;
+    let category_id = product.category_id;
+
+    return this.httpClient.post<any>(`http://localhost:8000/api/product`, {
+      name, description, count, price, category_id
+    })
+      .pipe(map(response => {
+        return response.product;
+      }))
+  }
+
   updateProduct(product: Product) {
     let name = product.name;
     let description = product.description;
@@ -55,5 +70,9 @@ export class ProductService {
       .pipe(map(response => {
         return response.product;
       }))
+  }
+
+  deleteProduct(productId: number) {
+    return this.httpClient.delete(`http://localhost:8000/api/product/${productId}`);
   }
 }

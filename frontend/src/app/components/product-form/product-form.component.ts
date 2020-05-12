@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Product} from "../../common/product";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {ProductService} from "../../services/product.service";
@@ -11,10 +11,11 @@ import {Category} from "../../common/category";
   styleUrls: ['./product-form.component.css']
 })
 export class ProductFormComponent implements OnInit {
-  @Input() product: Product;
+  product: Product;
   productForm: FormGroup;
   categories: Category[];
   loading = false;
+  option;
 
   constructor(private fb: FormBuilder,
               private productService: ProductService,
@@ -24,7 +25,7 @@ export class ProductFormComponent implements OnInit {
     this.getCategories();
     this.initProductForm();
   }
-
+  
   initProductForm() {
     this.productForm = this.fb.group({
       name: this.product.name,
@@ -38,21 +39,47 @@ export class ProductFormComponent implements OnInit {
   save() {
     this.loading = true;
     let editedProduct = this.fillModel();
-    this.productService.updateProduct(editedProduct).subscribe(
+
+    switch (this.option) {
+      case 'create':
+        this.createProduct(editedProduct);
+        break;
+      case 'update': {
+        this.updateProduct(editedProduct);
+        break;
+      }
+    }
+  }
+
+  //TODO: avoid code duplicate
+  createProduct(product) {
+    this.productService.createProduct(product).subscribe(
       () => {
         this.loading = false;
-      location.reload();
+        location.reload();
       },
       error => {
         console.log(error);
         this.alertService.error(error);
         this.loading = false;
       });
+  }
 
+  updateProduct(product) {
+    this.productService.updateProduct(product).subscribe(
+      () => {
+        this.loading = false;
+        location.reload();
+      },
+      error => {
+        console.log(error);
+        this.alertService.error(error);
+        this.loading = false;
+      });
   }
 
   fillModel(): Product {
-    return new Product(
+    return new Product().build(
       this.product.id,
       this.productForm.get('name').value,
       this.productForm.get('description').value,
