@@ -25,7 +25,7 @@ export class ProductFormComponent implements OnInit {
     this.getCategories();
     this.initProductForm();
   }
-  
+
   initProductForm() {
     this.productForm = this.fb.group({
       name: this.product.name,
