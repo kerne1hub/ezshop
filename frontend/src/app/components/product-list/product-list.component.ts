@@ -1,10 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  ComponentFactory,
+  ComponentFactoryResolver, ComponentRef, NgModule, OnDestroy,
+  OnInit,
+  ViewContainerRef
+} from '@angular/core';
 import {Product} from "../../common/product";
 import {ActivatedRoute} from "@angular/router";
 import {ProductService} from "../../services/product.service";
 import {Category} from "../../common/category";
 import {AlertService} from "../../services/alert.service";
 import {AuthenticationService} from "../../services/authentication.service";
+import {ProductFormComponent} from "../product-form/product-form.component";
 
 @Component({
   selector: 'app-product-list',
@@ -13,15 +20,19 @@ import {AuthenticationService} from "../../services/authentication.service";
 })
 export class ProductListComponent implements OnInit {
 
+  componentRef: ComponentRef<ProductFormComponent>;
+
   products: Product[];
   categories: Category[];
   isLoggedIn = false;
   currentCategoryId;
 
   constructor(private activatedRoute: ActivatedRoute,
+              private resolver: ComponentFactoryResolver,
               private productService: ProductService,
               private authService: AuthenticationService,
-              private alertService: AlertService) {
+              private alertService: AlertService,
+              private viewContainerRef: ViewContainerRef) {
     this.authService.currentUser.subscribe(
       user => this.isLoggedIn = user != null
     )
@@ -32,6 +43,31 @@ export class ProductListComponent implements OnInit {
       this.getProducts();
       this.getCategories(this.currentCategoryId);
     })
+  }
+
+  createComponent(product: Product) {
+    if (this.componentRef) {
+      console.log('Update component');
+      this.updateComponent(product);
+      return;
+    }
+
+    console.log('Create component');
+    const componentFactory: ComponentFactory<ProductFormComponent> =
+      this.resolver.resolveComponentFactory(ProductFormComponent);
+
+    this.componentRef = this.viewContainerRef.createComponent(componentFactory);
+    this.componentRef.instance.product = product;
+  }
+
+  updateComponent(product: Product) {
+    this.componentRef.instance.product = product;
+    this.componentRef.instance.initProductForm();
+  }
+
+  destroyComponent() {
+    this.componentRef.destroy();
+    this.componentRef = null;
   }
 
   getProducts() {
