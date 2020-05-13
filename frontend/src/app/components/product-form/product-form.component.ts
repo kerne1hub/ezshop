@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {ProductService} from "../../services/product.service";
 import {AlertService} from "../../services/alert.service";
 import {Category} from "../../common/category";
+import {CategoryService} from "../../services/category.service";
 
 @Component({
   selector: 'app-product-form',
@@ -19,6 +20,7 @@ export class ProductFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private productService: ProductService,
+              private categoryService: CategoryService,
               private alertService: AlertService) { }
 
   ngOnInit(): void {
@@ -90,7 +92,7 @@ export class ProductFormComponent implements OnInit {
   }
 
   getCategories() {
-    this.productService.getCategories().subscribe(
+    this.categoryService.getCategories().subscribe(
       data => this.categories = data
     )
   }

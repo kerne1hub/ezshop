@@ -12,6 +12,8 @@ import {Category} from "../../common/category";
 import {AlertService} from "../../services/alert.service";
 import {AuthenticationService} from "../../services/authentication.service";
 import {ProductFormComponent} from "../product-form/product-form.component";
+import {CategoryService} from "../../services/category.service";
+import {CategoryFormComponent} from "../category-form/category-form.component";
 
 @Component({
   selector: 'app-product-list',
@@ -20,7 +22,7 @@ import {ProductFormComponent} from "../product-form/product-form.component";
 })
 export class ProductListComponent implements OnInit {
 
-  componentRef: ComponentRef<ProductFormComponent>;
+  private productComponentRef: ComponentRef<ProductFormComponent>
 
   products: Product[];
   categories: Category[];
@@ -30,6 +32,7 @@ export class ProductListComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private resolver: ComponentFactoryResolver,
               private productService: ProductService,
+              private categoryService: CategoryService,
               private authService: AuthenticationService,
               private alertService: AlertService,
               private viewContainerRef: ViewContainerRef) {
@@ -42,45 +45,92 @@ export class ProductListComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(() => {
       this.getProducts();
       this.getCategories(this.currentCategoryId);
-    })
+    });
   }
 
-  createComponent(product: Product = null) {
-    if (!this.componentRef) {
-      const componentFactory: ComponentFactory<ProductFormComponent> =
-        this.resolver.resolveComponentFactory(ProductFormComponent);
-
-      this.componentRef = this.viewContainerRef.createComponent(componentFactory);
-
-      if (product) {
-        this.componentRef.instance.product = product;
-        this.componentRef.instance.option = 'update';
-      } else {
-        this.componentRef.instance.product = new Product();
-        this.componentRef.instance.option = 'create';
+  createComponent(type: string, instance = null) {
+      switch (type) {
+        case 'product': {
+          if (this.productComponentRef) {
+            this.updateComponent(type, instance, this.productComponentRef);
+          } else {
+            this.createProductForm(instance);
+          }
+          break;
+        }
+        case 'category': {
+          this.createCategoryForm(instance);
+          break;
+        }
       }
-
-    } else {
-      this.updateComponent(product);
-    }
-
   }
 
-  updateComponent(product: Product) {
-    if (product) {
-      this.componentRef.instance.product = product;
-      this.componentRef.instance.option = 'update';
-      this.componentRef.instance.initProductForm();
-    } else {
-      this.componentRef.instance.product = new Product();
-      this.componentRef.instance.option = 'create';
-      this.componentRef.instance.initProductForm();
+  private updateComponent(type: string, instance = null, component: ComponentRef<any>) {
+    let componentInstance = Reflect.get(component, 'instance');
+
+    switch (type) {
+      case 'product': {
+        if (instance) {
+          componentInstance.product = instance;
+          componentInstance.option = 'update';
+          componentInstance.initProductForm();
+        } else {
+          componentInstance.product = new Product();
+          componentInstance.option = 'create';
+          componentInstance.initProductForm();
+        }
+        break;
+      }
+      case 'category': {
+        componentInstance = this.categoryService.getCategoryForm().instance;
+        if (instance) {
+          componentInstance.category = instance;
+          componentInstance.option = 'update';
+          componentInstance.initCategoryForm();
+        } else {
+          componentInstance.category = new Category();
+          componentInstance.option = 'create';
+          componentInstance.initCategoryForm();
+        }
+        break;
+      }
     }
   }
 
-  destroyComponent() {
-    this.componentRef.destroy();
-    this.componentRef = null;
+  private createCategoryForm(instance: Category) {
+    if (this.categoryService.getCategoryForm()) {
+      this.categoryService.destroyCategoryForm();
+    }
+
+    const componentFactory: ComponentFactory<CategoryFormComponent> =
+      this.resolver.resolveComponentFactory(CategoryFormComponent);
+
+    this.categoryService.setCategoryForm(this.viewContainerRef.createComponent(componentFactory));
+    let componentInstance = this.categoryService.getCategoryForm().instance;
+
+    if (instance) {
+      componentInstance.category = instance;
+      componentInstance.option = 'update';
+    } else {
+      componentInstance.category = new Category();
+      componentInstance.option = 'create';
+    }
+  }
+
+  private createProductForm(instance: Product) {
+    const componentFactory: ComponentFactory<ProductFormComponent> =
+      this.resolver.resolveComponentFactory(ProductFormComponent);
+
+    this.productComponentRef = this.viewContainerRef.createComponent(componentFactory);
+    let componentInstance = this.productComponentRef.instance;
+
+    if (instance) {
+      componentInstance.product = instance;
+      componentInstance.option = 'update';
+    } else {
+      componentInstance.product = new Product();
+      componentInstance.option = 'create';
+    }
   }
 
   getProducts() {
@@ -107,7 +157,7 @@ export class ProductListComponent implements OnInit {
   }
 
   getCategories(parentId: number) {
-    this.productService.getCategories(parentId).subscribe(
+    this.categoryService.getCategories(parentId).subscribe(
       data => this.categories = data
     );
   }

@@ -1,0 +1,44 @@
+<div class="modal fade" id="category_form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" id="category_dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Информация о категории</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="categoryForm" class="modal-body">
+        <div class="form-group row justify-content-center">
+          <label for="nameInput{{category.id}}" class="col-sm-5 col-form-label">Название категории</label>
+          <div class="col-sm-7">
+            <input type="text" class="form-control" id="nameInput{{category.id}}" formControlName="name">
+          </div>
+        </div>
+
+        <div class="form-group row justify-content-center">
+          <label for="descInput{{category.id}}" class="col-sm-5 col-form-label">Описание категории</label>
+          <div class="col-sm-7">
+            <textarea class="form-control" id="descInput{{category.id}}" formControlName="description"></textarea>
+          </div>
+        </div>
+
+        <div class="form-group row justify-content-center">
+          <label for="categoryInput{{category.id}}" class="col-sm-5 col-form-label">Родительская категория</label>
+          <div class="col-sm-7">
+            <select class="custom-select" id="categoryInput{{category.id}}" formControlName="parent_id">
+              <option *ngFor="let category of categories" value="{{ category.id }}">{{ category.title }}</option>
+            </select>
+          </div>
+        </div>
+      </form>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" (click)="save()">Save</button>
+      </div>
+      <div class="justify-content-center m-2">
+        <alert></alert>
+      </div>
+    </div>
+  </div>
+</div>
+

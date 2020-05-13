@@ -17,6 +17,8 @@ import {ReactiveFormsModule} from "@angular/forms";
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { AlertComponent } from './components/alert/alert.component';
 import { ProductFormComponent } from './components/product-form/product-form.component';
+import { CategoryFormComponent } from './components/category-form/category-form.component';
+import {CategoryService} from "./services/category.service";
 
 const routes: Routes = [
   { path: 'register', component: RegistrationFormComponent },
@@ -37,7 +39,8 @@ const routes: Routes = [
     RegistrationFormComponent,
     LoginFormComponent,
     AlertComponent,
-    ProductFormComponent
+    ProductFormComponent,
+    CategoryFormComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +51,7 @@ const routes: Routes = [
   ],
   providers: [
     ProductService,
+    CategoryService,
     AuthenticationService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

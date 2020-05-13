@@ -4,6 +4,9 @@
        routerLinkActive="bg-secondary text-white font-weight-bold">
       <div class="d-flex w-100 justify-content-between">
         {{ category.title }}
+        <button class="btn btn-link pr-0" (click)="clearErrors(); createComponent(category)" data-toggle="modal" data-target="#category_form" *ngIf="isLoggedIn">
+          <small class="fa fa-edit d-block py-0"></small>
+        </button>
       </div>
       <small>{{ category.description }}</small>
     </a>

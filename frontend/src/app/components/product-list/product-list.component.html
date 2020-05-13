@@ -15,10 +15,12 @@
 
     <div class="card mb-3 mt-2" *ngIf="isLoggedIn">
       <div class="row no-gutters justify-content-center">
-        <button type="button" class="btn btn-link" (click)="clearErrors(); createComponent()" data-toggle="modal" data-target="#product_form">
+        <button type="button" class="btn btn-link" (click)="clearErrors(); createComponent('product')" data-toggle="modal" data-target="#product_form">
           <span class="fa fa-dolly-flatbed"></span> Добавить продукт
         </button>
-        <button type="button" class="btn btn-link"><span class="fa fa-list-ul"></span> Добавить категорию</button>
+        <button type="button" class="btn btn-link" (click)="clearErrors(); createComponent('category')" data-toggle="modal" data-target="#category_form">
+          <span class="fa fa-list-ul"></span> Добавить категорию
+        </button>
       </div>
     </div>
 
@@ -46,7 +48,7 @@
         <small class="text-muted">В наличии: {{ product.count }}</small>
         <div class="input-group">
         <div class="input-group-prepend">
-          <a class="dropdown-item" (click)="clearErrors(); createComponent(product)" data-toggle="modal" data-target="#product_form" *ngIf="isLoggedIn"><small class="fa fa-edit d-block py-0"></small></a>
+          <a class="dropdown-item" (click)="clearErrors(); createComponent('product', product)" data-toggle="modal" data-target="#product_form" *ngIf="isLoggedIn"><small class="fa fa-edit d-block py-0"></small></a>
           <a class="dropdown-item" (click)="deleteProduct(product.id)" *ngIf="isLoggedIn"><small class="fa fa-trash d-block py-0"></small></a>
         </div>
         </div>
