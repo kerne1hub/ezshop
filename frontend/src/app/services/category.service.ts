@@ -29,6 +29,13 @@ export class CategoryService {
     );
   }
 
+  getCategory(id: number): Observable<Category> {
+    const url = `${this.baseUrl}/category/${id}`;
+    return this.httpClient.get<Category>(url).pipe(
+      map(response => response)
+    );
+  }
+
   createCategory(category: Category) {
     const url = `${this.baseUrl}/category`;
     return this.httpClient.post<Category>(url, category).pipe(
@@ -40,6 +47,10 @@ export class CategoryService {
     return this.httpClient.put<Category>(`${this.baseUrl}/category/${category.id}`, category)
       .pipe(map(response => response)
       );
+  }
+
+  deleteCategory(id: number) {
+    return this.httpClient.delete(`${this.baseUrl}/category/${id}`);
   }
 
   getCategoryForm() {

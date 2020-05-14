@@ -3,6 +3,7 @@ import {Category} from "../../common/category";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {CategoryService} from "../../services/category.service";
 import {AlertService} from "../../services/alert.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-category-form',
@@ -19,7 +20,8 @@ export class CategoryFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private categoryService: CategoryService,
-              private alertService: AlertService) { }
+              private alertService: AlertService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.getCategories();
@@ -36,6 +38,11 @@ export class CategoryFormComponent implements OnInit {
 
   save() {
     this.loading = true;
+
+    if (this.option == 'delete') {
+      this.deleteCategory(this.category.id);
+    }
+
     let editedCategory = this.fillModel();
 
     switch (this.option) {
@@ -76,6 +83,20 @@ export class CategoryFormComponent implements OnInit {
       });
   }
 
+  private deleteCategory(id: number) {
+    this.categoryService.deleteCategory(id).subscribe(
+      () => {
+        this.loading = false;
+        location.reload();
+      },
+      error => {
+        console.log(error);
+        this.alertService.error(error);
+        this.loading = false;
+      });
+    this.router.navigate(['/']);
+  }
+
   fillModel(): Category {
     return new Category().build(
       this.category.id,
@@ -94,5 +115,4 @@ export class CategoryFormComponent implements OnInit {
   clearErrors() {
     this.alertService.clear();
   }
-
 }

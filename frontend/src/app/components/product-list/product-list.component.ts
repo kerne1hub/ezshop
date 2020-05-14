@@ -28,6 +28,7 @@ export class ProductListComponent implements OnInit {
   categories: Category[];
   isLoggedIn = false;
   currentCategoryId;
+  currentCategory: Category;
 
   constructor(private activatedRoute: ActivatedRoute,
               private resolver: ComponentFactoryResolver,
@@ -49,20 +50,20 @@ export class ProductListComponent implements OnInit {
   }
 
   createComponent(type: string, instance = null) {
-      switch (type) {
-        case 'product': {
-          if (this.productComponentRef) {
-            this.updateComponent(type, instance, this.productComponentRef);
-          } else {
-            this.createProductForm(instance);
-          }
-          break;
+    switch (type) {
+      case 'product': {
+        if (this.productComponentRef) {
+          this.updateComponent(type, instance, this.productComponentRef);
+        } else {
+          this.createProductForm(instance);
         }
-        case 'category': {
-          this.createCategoryForm(instance);
-          break;
-        }
+        break;
       }
+      case 'category': {
+        this.createCategoryForm(instance);
+        break;
+      }
+    }
   }
 
   private updateComponent(type: string, instance = null, component: ComponentRef<any>) {
@@ -146,6 +147,8 @@ export class ProductListComponent implements OnInit {
     this.productService.getProducts(this.currentCategoryId).subscribe(
       data => this.products = data
     );
+
+    this.getCurrentCategory();
   }
 
   getProductsByKeyword() {
@@ -159,6 +162,12 @@ export class ProductListComponent implements OnInit {
   getCategories(parentId: number) {
     this.categoryService.getCategories(parentId).subscribe(
       data => this.categories = data
+    );
+  }
+
+  private getCurrentCategory() {
+    this.categoryService.getCategory(this.currentCategoryId).subscribe(
+      data => this.currentCategory = data
     );
   }
 

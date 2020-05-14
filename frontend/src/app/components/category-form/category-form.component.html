@@ -32,8 +32,9 @@
         </div>
       </form>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-success" (click)="save()">Save</button>
+        <button type="button" class="btn btn-danger align-self-start mr-auto" (click)="option='delete'; save()">Удалить</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+        <button type="button" class="btn btn-success" (click)="save()">OK</button>
       </div>
       <div class="justify-content-center m-2">
         <alert></alert>

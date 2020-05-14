@@ -51,7 +51,6 @@ export class CategoryBarComponent implements OnInit {
 
   createComponent(instance: Category) {
     if (!this.categoryService.getCategoryForm()) {
-      console.log('create');
       const componentFactory: ComponentFactory<CategoryFormComponent> =
         this.resolver.resolveComponentFactory(CategoryFormComponent);
 
@@ -64,7 +63,6 @@ export class CategoryBarComponent implements OnInit {
       this.createComponent(instance);
     }
   }
-
 
   clearErrors() {
     this.alertService.clear();

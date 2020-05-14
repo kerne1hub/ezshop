@@ -21,6 +21,9 @@
         <button type="button" class="btn btn-link" (click)="clearErrors(); createComponent('category')" data-toggle="modal" data-target="#category_form">
           <span class="fa fa-list-ul"></span> Добавить категорию
         </button>
+        <button type="button" class="btn btn-link" (click)="clearErrors(); createComponent('category', currentCategory)" data-toggle="modal" data-target="#category_form">
+          <span class="fa fa-list-ul"></span> Изменить категорию
+        </button>
       </div>
     </div>
 
@@ -49,7 +52,29 @@
         <div class="input-group">
         <div class="input-group-prepend">
           <a class="dropdown-item" (click)="clearErrors(); createComponent('product', product)" data-toggle="modal" data-target="#product_form" *ngIf="isLoggedIn"><small class="fa fa-edit d-block py-0"></small></a>
-          <a class="dropdown-item" (click)="deleteProduct(product.id)" *ngIf="isLoggedIn"><small class="fa fa-trash d-block py-0"></small></a>
+          <a class="dropdown-item" data-toggle="modal" data-target="#confirm_dialog" *ngIf="isLoggedIn"><small class="fa fa-trash d-block py-0"></small></a>
+
+          <!--confirm dialog-->
+          <div class="modal fade" id="confirm_dialog" tabindex="-1" role="dialog" aria-labelledby="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="dialog">Подтверждение</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Вы действительно хотите удалить этот продукт?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Отмена</button>
+                  <button type="button" (click)="deleteProduct(product.id)" class="btn btn-outline-danger ml-1">Удалить</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
         </div>
         </div>
