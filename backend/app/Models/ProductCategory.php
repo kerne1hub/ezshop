@@ -24,6 +24,10 @@ class ProductCategory extends Model
         'parent_id',
     ];
 
+    protected $hidden = [
+        'deleted_at',
+    ];
+
     public function parentCategory()
     {
         return $this->belongsTo(self::class, 'parent_id', 'id');

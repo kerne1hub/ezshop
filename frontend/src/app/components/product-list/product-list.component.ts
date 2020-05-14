@@ -66,6 +66,7 @@ export class ProductListComponent implements OnInit {
     }
   }
 
+  //TODO: extract methods
   private updateComponent(type: string, instance = null, component: ComponentRef<any>) {
     let componentInstance = Reflect.get(component, 'instance');
 
@@ -134,24 +135,15 @@ export class ProductListComponent implements OnInit {
     }
   }
 
-  getProducts() {
-    const searchMode = this.activatedRoute.snapshot.paramMap.has('keyword');
-
-    searchMode ? this.getProductsByKeyword() : this.getProductsByCategory();
+  private getProducts() {
+    if (this.activatedRoute.snapshot.paramMap.has('keyword')) {
+      this.getProductsByKeyword();
+    } else {
+      this.getCurrentCategory();
+    }
   }
 
-  getProductsByCategory() {
-    this.currentCategoryId = this.activatedRoute.snapshot.paramMap.get('id');
-    this.currentCategoryId = this.currentCategoryId == null ? 1 : this.currentCategoryId;
-
-    this.productService.getProducts(this.currentCategoryId).subscribe(
-      data => this.products = data
-    );
-
-    this.getCurrentCategory();
-  }
-
-  getProductsByKeyword() {
+  private getProductsByKeyword() {
     const keyword: string = this.activatedRoute.snapshot.paramMap.get('keyword');
 
     this.productService.searchProducts(keyword).subscribe(
@@ -159,15 +151,20 @@ export class ProductListComponent implements OnInit {
     );
   }
 
-  getCategories(parentId: number) {
+  private getCategories(parentId: number) {
     this.categoryService.getCategories(parentId).subscribe(
       data => this.categories = data
     );
   }
 
   private getCurrentCategory() {
+    this.currentCategoryId = this.activatedRoute.snapshot.paramMap.get('id') || this.currentCategoryId || 1;
+
     this.categoryService.getCategory(this.currentCategoryId).subscribe(
-      data => this.currentCategory = data
+      data => {
+        this.currentCategory = data;
+        this.products = this.currentCategory.products;
+      }
     );
   }
 
