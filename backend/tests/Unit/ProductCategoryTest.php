@@ -15,7 +15,6 @@ class ProductCategoryTest extends TestCase
         $this->json('post', '/api/auth/login', $user);
     }
 
-
     public function testCreateRoot()
     {
         $category = $this->getJsonFixture('ProductCategoryTest', 'create_category.json');

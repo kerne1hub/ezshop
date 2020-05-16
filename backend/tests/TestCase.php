@@ -4,7 +4,6 @@ namespace Tests;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
