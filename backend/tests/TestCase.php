@@ -4,8 +4,9 @@ namespace Tests;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use Illuminate\Support\Facades\DB;
+
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -17,8 +18,8 @@ abstract class TestCase extends BaseTestCase
 
         $this->clearDatabaseSchema();
 
-        $this->artisan("cache:clear");
-        $this->artisan("migrate");
+        $this->artisan('cache:clear');
+        $this->artisan('migrate');
 
         $this->prepareData();
     }
@@ -50,7 +51,7 @@ abstract class TestCase extends BaseTestCase
         }
 
         if ($failIfNotExists) {
-            $this->fail($fn . ' fixture does not exist');
+            $this->fail($fn.' fixture does not exist');
         }
 
         return '';

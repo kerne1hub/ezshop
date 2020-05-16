@@ -7,7 +7,7 @@ use Tests\TestCase;
 
 class ProductTest extends TestCase
 {
-    public function setUp(): Void
+    public function setUp(): void
     {
         parent::setUp();
         $user = $this->getJsonFixture('UserTest', 'create_user.json');

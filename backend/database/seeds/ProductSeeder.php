@@ -13,11 +13,11 @@ class ProductSeeder extends Seeder
     {
         for ($i = 1; $i < 6; $i++) {
             DB::table('products')->insert([
-                'name'       => 'Продукт #'.$i,
+                'name'        => 'Продукт #'.$i,
                 'description' => 'Описание продукта'.$i,
                 'category_id' => 1,
-                'count' => $i,
-                'price' => rand(10, 1000),
+                'count'       => $i,
+                'price'       => rand(10, 1000),
             ]);
         }
     }
