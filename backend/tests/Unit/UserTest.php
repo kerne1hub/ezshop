@@ -20,6 +20,5 @@ class UserTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
 
         $this->assertNotEmpty($response->json('access_token'));
-
     }
 }

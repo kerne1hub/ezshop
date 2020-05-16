@@ -1,0 +1,22 @@
+language: php
+
+php:
+  - 7.3
+
+before_script:
+  - cd backend
+  - cp .env.travis .env
+  - composer self-update
+  - composer install --prefer-source --no-interaction --dev
+  - php artisan key:generate
+  - php artisan jwt:generate
+  - php artisan migrate
+
+before_install:
+  - mysql -e 'CREATE DATABASE ezshop;'
+
+script:
+  - php artisan test
+
+services:
+  - mysql
