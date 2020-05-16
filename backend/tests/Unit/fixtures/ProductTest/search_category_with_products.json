@@ -1,0 +1,24 @@
+{
+    "id": 1,
+    "title": "Category 1",
+    "description": "description",
+    "parent_id": null,
+    "products": [
+        {
+            "id": 1,
+            "name": "Product 1",
+            "description": "Product description",
+            "count": 5,
+            "price": 500,
+            "category_id": 1
+        },
+        {
+            "id": 2,
+            "name": "Product 2",
+            "description": "Product description",
+            "count": 6,
+            "price": 300,
+            "category_id": 1
+        }
+    ]
+}

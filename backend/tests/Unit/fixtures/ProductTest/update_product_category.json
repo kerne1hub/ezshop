@@ -1,0 +1,7 @@
+{
+    "name": "Product",
+    "description": "description",
+    "count": 1,
+    "price": 100,
+    "category_id": 2
+}

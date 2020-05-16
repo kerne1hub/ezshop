@@ -1,0 +1,8 @@
+[
+    {
+        "id": 4,
+        "title": "Category 4",
+        "description": "Category description",
+        "parent_id": 1
+    }
+]
